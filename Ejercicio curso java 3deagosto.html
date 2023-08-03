@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function guardar() {
+            var tbody = document.getElementById('tbody')
+            var numFila = tbody.rows.length
+
+            for (x = 0; x < numFila; x++) {
+                if (tbody.rows[x].childNodes[0].innerHTML === document.getElementById("id").value) {
+                    tbody.rows[x].childNodes[1].innerHTML = document.getElementById("nombre").value
+                    tbody.rows[x].childNodes[2].innerHTML = document.getElementById("apellido").value
+                    document.getElementById('id').value = ""
+                    document.getElementById('nombre').value = ""
+                    document.getElementById('apellido').value = ""
+                    return
+                }
+            }
+            var fila = tbody.insertRow()
+
+            fila.setAttribute("id", "fila_" + numFila)
+            var celda = fila.insertCell()
+            celda.innerHTML = numFila
+            celda = fila.insertCell()
+            celda.innerHTML = document.getElementById('nombre').value
+            celda = fila.insertCell()
+            celda.innerHTML = document.getElementById('apellido').value
+            celda = fila.insertCell()
+            celda.innerHTML = "<button onclick='ver(" + numFila + ")'>VER</button>"
+            celda = fila.insertCell()
+            celda.innerHTML = "<button onclick='borrar(" + numFila + ")'>BORRAR</button>"
+
+            document.getElementById('id').value = ""
+            document.getElementById('nombre').value = ""
+            document.getElementById('apellido').value = ""
+        }
+
+        function ver(fila) {
+            //console.log(fila)
+            document.getElementById("id").value = document.getElementById("fila_" + fila).childNodes[0].innerHTML
+            document.getElementById("nombre").value = document.getElementById("fila_" + fila).childNodes[1].innerHTML
+            document.getElementById("apellido").value = document.getElementById("fila_" + fila).childNodes[2].innerHTML
+        }
+        function borrar(fila) {
+            document.getElementById("fila_" + fila).remove()
+        }
+    </script>
+</head>
+
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+        <tfoot>
+            <tr>
+                <td><input id="id" readonly /></td>
+                <td><input id="nombre" /></td>
+                <td><input id="apellido" /></td>
+                <td colspan="2" style="text-align: center"><button onclick="guardar()">GUARDAR</button></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+
+</html>
